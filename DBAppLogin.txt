@@ -1,0 +1,43 @@
+create database AppLogin;
+
+CREATE TABLE `perfil` (
+  `id` int(11) NOT NULL,
+  `perfil` varchar(1) NOT NULL,
+  `datainc` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+INSERT INTO `perfil` (`id`, `perfil`, `datainc`) VALUES
+(1, 'A', '2018-10-03 02:11:00'),
+(2, 'U', '2018-10-03 02:11:00');
+
+-- --------------------------------------------------------
+
+
+CREATE TABLE `usuario` (
+  `id` int(11) NOT NULL,
+  `fk_id_perfil` int(11) NOT NULL,
+  `login` varchar(15) NOT NULL,
+  `senha` varchar(32) NOT NULL,
+  `datainc` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+INSERT INTO `usuario` (`id`, `fk_id_perfil`, `login`, `senha`, `datainc`) VALUES
+(1, 1, 'fabio', '123', '2018-10-03 02:11:41'),
+(2, 2, 'aluno', '321', '2018-10-03 02:11:41');
+
+ALTER TABLE `perfil`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_id_perfil` (`fk_id_perfil`);
+
+ALTER TABLE `perfil`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+ALTER TABLE `usuario`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `usuario`
+  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`fk_id_perfil`) REFERENCES `perfil` (`id`);
